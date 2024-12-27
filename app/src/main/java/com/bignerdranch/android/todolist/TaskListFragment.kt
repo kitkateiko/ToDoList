@@ -38,8 +38,9 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list){
         taskListViewModel.tasks.observe(viewLifecycleOwner){
             tasks->adapter.updateTasks(tasks)
         }
+        taskListViewModel.getTasks()
 
-        taskListViewModel.addTask(content = "MAke", priority = 3)
+            //taskListViewModel.addTask(content = "MAke", priority = 2)
     }
 
     private inner class TaskHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
