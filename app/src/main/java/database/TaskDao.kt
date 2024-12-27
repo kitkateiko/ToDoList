@@ -9,7 +9,7 @@ import com.bignerdranch.android.todolist.Task
 
 @Dao
 interface TaskDao {
-    @Query("SELECT * FROM task")
+    @Query("SELECT * FROM task ORDER BY priority ASC")
     suspend fun getTask(): MutableList<Task>
 
     @Insert
