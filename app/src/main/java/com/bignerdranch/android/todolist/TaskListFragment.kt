@@ -1,5 +1,6 @@
 package com.bignerdranch.android.todolist
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -9,11 +10,11 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import  androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import database.TDLDatabase
 
 
@@ -43,6 +44,13 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list){
         taskListViewModel.getTasks()
 
         SwipeToDel()
+
+        val fab: FloatingActionButton = view.findViewById(R.id.fab)
+        fab.setOnClickListener {
+            val intent = Intent(requireContext(), AddActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private inner class TaskHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -80,12 +88,6 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list){
         }
     }
 
-
-    companion object
-    {
-        fun newInstance()=TaskListFragment()
-    }
-
     private fun SwipeToDel()
     {
         val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
@@ -107,4 +109,17 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list){
         }
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(recyclerView)
     }
+
+
+
+    override fun onResume() {
+        super.onResume()
+        taskListViewModel.getTasks()
+    }
+
+    companion object
+    {
+        fun newInstance()=TaskListFragment()
+    }
+
 }
